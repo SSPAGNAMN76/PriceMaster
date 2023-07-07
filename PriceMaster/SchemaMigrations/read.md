@@ -60,3 +60,11 @@ In Windoes PowerSher run the following command :
 		ALTER DATABASE [PriceMaster] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 1000, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
 		GO
 		```
+
+#Apply Migrations
+
+To apply the migrations, use the following command:
+
+```powershell
+dotnet-badgie-migrator "Server=localhost,10000;Database=PriceMaster;User Id=sa;Password=Qwerty03;" .\SchemaMigrations\*.sql -i -d:SqlServer
+```
