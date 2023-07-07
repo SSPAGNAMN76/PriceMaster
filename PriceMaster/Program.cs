@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Options;
 using PriceMaster.Models;
+using PriceMaster.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,8 @@ builder.Services.Configure<AppSettings>(configuration.GetSection("AppSettings"))
 builder.Services.AddSingleton(configuration);
 builder.Services.AddTransient<IConfigureOptions<AppSettings>>(provider =>
     new ConfigureFromConfigurationOptions<AppSettings>(configuration.GetSection("AppSettings")));
+
+builder.Services.AddTransient<IConfiguratonParameterRepository, ConfiguratonParameterRepository>();
 
 var app = builder.Build();
 
