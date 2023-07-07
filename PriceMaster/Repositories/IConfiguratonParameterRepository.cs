@@ -1,6 +1,6 @@
 ﻿using PriceMaster.Models;
 
-namespace PriceMaster.Repository
+namespace PriceMaster.Repositories
 {
     public interface IConfiguratonParameterRepository
     {

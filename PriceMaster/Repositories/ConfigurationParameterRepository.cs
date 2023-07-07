@@ -3,15 +3,15 @@ using PriceMaster.Models;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace PriceMaster.Repository
+namespace PriceMaster.Repositories
 {
-    public class ConfigurationParameterRepository : IConfiguratonParameterRepository
+    public class ConfiguratonParameterRepository : IConfiguratonParameterRepository
     {
 
         private readonly IConfiguration _configuration;
         private readonly string _connectionstring;
 
-        public ConfigurationParameterRepository(IConfiguration configuration)
+        public ConfiguratonParameterRepository(IConfiguration configuration)
         {
             _configuration = configuration;
             _connectionstring = _configuration.GetConnectionString("PriceMasterConnectionString") ?? string.Empty;
