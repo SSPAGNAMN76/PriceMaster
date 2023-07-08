@@ -13,15 +13,12 @@ namespace PriceMaster.Services
         }
 
 
-        public IEnumerable<ConfigurationParameter> GetAllParameters()
-        {
-            return _repository.GetAll();
-        }
+        public IEnumerable<ConfigurationParameter> GetAllParameters() => _repository.GetAll();
 
-        public ConfigurationParameter GetParameterById(int id)
-        {
-            return _repository.GetById(id);
-        }
+        public ConfigurationParameter GetParameterById(int id) => _repository.GetById(id);
+
+        public ConfigurationParameter GetCurrentConfiguration() => _repository.GetCurrentConfiguration();
+       
 
         public void AddParameter(ConfigurationParameter parameter)
         {

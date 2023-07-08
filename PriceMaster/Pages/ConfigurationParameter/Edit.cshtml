@@ -1,0 +1,79 @@
+﻿@model ConfigurationParameterViewModel
+
+@{
+    ViewData["Title"] = "Modifica Parametri di Configurazione";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Assumi che tu abbia un layout condiviso chiamato "_Layout.cshtml"
+}
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+
+    <form asp-action="Edit" method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-group">
+            <label asp-for="IVA" class="control-label">IVA</label>
+            <input asp-for="IVA" class="form-control" />
+            <span asp-validation-for="IVA" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ScortaMinima" class="control-label">Scorta Minima</label>
+            <input asp-for="ScortaMinima" class="form-control" />
+            <span asp-validation-for="ScortaMinima" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="RicaricoMinimo" class="control-label">Ricarico Minimo</label>
+            <input asp-for="RicaricoMinimo" class="form-control" />
+            <span asp-validation-for="RicaricoMinimo" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="SpeseSpedizioneListino" class="control-label">Spese Spedizione Listino</label>
+            <input asp-for="SpeseSpedizioneListino" class="form-control" />
+            <span asp-validation-for="SpeseSpedizioneListino" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="MargineSSMinimo" class="control-label">Margine SS Minimo</label>
+            <input asp-for="MargineSSMinimo" class="form-control" />
+            <span asp-validation-for="MargineSSMinimo" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="DifferenzaMinima" class="control-label">Differenza Minima</label>
+            <input asp-for="DifferenzaMinima" class="form-control" />
+            <span asp-validation-for="DifferenzaMinima" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="SpeseSpedizioneRivenditore" class="control-label">Spese Spedizione Rivenditore</label>
+            <input asp-for="SpeseSpedizioneRivenditore" class="form-control" />
+            <span asp-validation-for="SpeseSpedizioneRivenditore" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ValidFrom" class="control-label">Valido dal</label>
+            <input asp-for="ValidFrom" class="form-control" />
+            <span asp-validation-for="ValidFrom" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ValidTo" class="control-label">Valido fino al</label>
+            <input asp-for="ValidTo" class="form-control" />
+            <span asp-validation-for="ValidTo" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Salva</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

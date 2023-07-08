@@ -1,3 +1,9 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using PriceMaster.Models;
 using PriceMaster.Repositories;
@@ -22,6 +28,21 @@ builder.Services.AddTransient<IConfigureOptions<AppSettings>>(provider =>
 builder.Services.AddTransient<IConfiguratonParameterRepository, ConfiguratonParameterRepository>();
 builder.Services.AddTransient<IConfigurationParameterService, ConfigurationParameterService>();
 
+// Configurazione del servizio di autenticazione
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Cookie.Name = "PriceMaster.Cookie";
+        options.LoginPath = "/Account/Login";
+    });
+
+// Configurazione dei requisiti di autorizzazione
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("UserOnly", policy => policy.RequireRole("User"));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -37,11 +58,17 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseAuthentication();
+app.UseAuthorization(); 
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "areaRoute",
+        pattern: "{area}/{controller}/{action}/{id?}",
+        defaults: new { controller = "Home", action = "Index" }
+    );
+});
 
 // Accessing the configuration values
 var appSettings = app.Services.GetRequiredService<IOptions<AppSettings>>().Value;
