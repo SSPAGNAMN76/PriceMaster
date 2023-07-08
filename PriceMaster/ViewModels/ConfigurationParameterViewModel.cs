@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PriceMaster.Models;
+namespace PriceMaster.ViewModels;
 
 public class ConfigurationParameterViewModel
 {

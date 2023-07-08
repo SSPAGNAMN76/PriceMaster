@@ -16,14 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="SchemaMigrations\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <UpToDateCheckInput Remove="Pages\ConfigurationParameter\Create.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Auth\Register.cshtml" />
     <_ContentIncludedByDefault Remove="Pages\ConfigurationParameter\Create.cshtml" />
   </ItemGroup>
 
@@ -32,6 +29,10 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Auth\Register.cshtml" />
   </ItemGroup>
 
 </Project>

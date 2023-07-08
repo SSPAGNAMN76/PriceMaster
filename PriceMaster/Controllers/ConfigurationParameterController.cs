@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PriceMaster.Models;
 using PriceMaster.Services;
+using PriceMaster.ViewModels;
 
 namespace PriceMaster.Controllers
 {
     [Authorize(Roles = "Admin")]
-    [Route("administrator/configurationparameter")]
     public class ConfigurationParameterController : Controller
     {
         private readonly IConfigurationParameterService _parameterService;
@@ -17,6 +16,7 @@ namespace PriceMaster.Controllers
         }
 
 
+        [Route("administrator/configurationparameter")]
         public IActionResult Index()
         {
             var currentConfiguration = _parameterService.GetCurrentConfiguration();

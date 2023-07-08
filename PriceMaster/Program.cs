@@ -1,13 +1,10 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using PriceMaster.Models;
-using PriceMaster.Repositories;
 using PriceMaster.Services;
+using System.Data;
+using System.Data.SqlClient;
+using PriceMaster.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,14 +18,15 @@ var configuration = new ConfigurationBuilder()
     .Build();
 
 builder.Services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
-builder.Services.AddSingleton(configuration);
+builder.Services.AddSingleton<IConfiguration>(configuration);
 builder.Services.AddTransient<IConfigureOptions<AppSettings>>(provider =>
     new ConfigureFromConfigurationOptions<AppSettings>(configuration.GetSection("AppSettings")));
 
 builder.Services.AddTransient<IConfiguratonParameterRepository, ConfiguratonParameterRepository>();
 builder.Services.AddTransient<IConfigurationParameterService, ConfigurationParameterService>();
 
-// Configurazione del servizio di autenticazione
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -36,7 +34,6 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LoginPath = "/Account/Login";
     });
 
-// Configurazione dei requisiti di autorizzazione
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
@@ -59,20 +56,16 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthentication();
-app.UseAuthorization(); 
+app.UseAuthorization();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-        name: "areaRoute",
-        pattern: "{area}/{controller}/{action}/{id?}",
-        defaults: new { controller = "Home", action = "Index" }
-    );
-});
+app.MapControllerRoute(
+    name: "areaRoute",
+    pattern: "{area}/{controller}/{action}/{id?}",
+    defaults: new { controller = "Home", action = "Index" }
+);
 
-// Accessing the configuration values
-var appSettings = app.Services.GetRequiredService<IOptions<AppSettings>>().Value;
 var connectionString = configuration.GetConnectionString("PriceMasterConnectionString");
+builder.Services.AddTransient<IDbConnection>(provider => new SqlConnection(connectionString));
 
 // Use the configuration values as needed in your application
 app.Run();
