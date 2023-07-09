@@ -1,8 +1,23 @@
-﻿@model PriceMaster.Models.LoginViewModel
+﻿@model PriceMaster.ViewModels.LoginViewModel
 
-@{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
+<h1>Login</h1>
+
+@using (Html.BeginForm("Login", "Auth", FormMethod.Post))
+{
+    @Html.ValidationSummary()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.UserName)
+        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.UserName)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password)
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Password)
+    </div>
+
+    <button type="submit" class="btn btn-primary">Login</button>
 }
 
-<h2>title</h2>

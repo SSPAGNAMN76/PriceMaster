@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Auth\AdminOnlyAction.cshtml" />
     <_ContentIncludedByDefault Remove="Pages\Auth\Register.cshtml" />
     <_ContentIncludedByDefault Remove="Pages\ConfigurationParameter\Create.cshtml" />
   </ItemGroup>
@@ -33,6 +34,10 @@
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Pages\Auth\Register.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Auth\AdminOnlyAction.cshtml" />
   </ItemGroup>
 
 </Project>

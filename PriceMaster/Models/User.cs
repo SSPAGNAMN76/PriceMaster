@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using PriceMaster.ViewModels;
 
 namespace PriceMaster.Models
 {
@@ -14,7 +15,18 @@ namespace PriceMaster.Models
             Roles = new List<Role>();
             Credentials = new UserCredentials();
         }
-        
+
+        public User(RegisterViewModel registerViewModel)
+        {
+            LastName = registerViewModel.LastName;
+            FirstName = registerViewModel.FirstName;
+            BirthCity = registerViewModel.BirthCity;
+            BirthState = registerViewModel.BirthState;
+            Email = registerViewModel.Email;
+            Roles = new List<Role>();
+            Credentials = new UserCredentials();
+        }
+
         public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -25,4 +37,5 @@ namespace PriceMaster.Models
         public List<Role> Roles { get; set; } // Relazione N:M con la tabella Roles
         public UserCredentials Credentials { get; set; } // Relazione 1:1 con la tabella UserCredentials
     }
+
 }

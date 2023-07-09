@@ -1,49 +1,32 @@
-﻿using System.Data;
-using System.Data.SqlClient;
-using Dapper;
-using PriceMaster.Helper;
+﻿using PriceMaster.Helper;
 using PriceMaster.Models;
+using PriceMaster.Repositories;
 
-namespace PriceMaster.Services;
-
-public class AuthenticationService : IAuthenticationService
+namespace PriceMaster.Services
 {
-    
-    private readonly SqlConnection _dbConnection;
-
-    public AuthenticationService(SqlConnection dbConnection)
+    public class AuthenticationService : IAuthenticationService
     {
-        _dbConnection = dbConnection;
-    }
+        private readonly IUserRepository _userRepository;
 
-    public User Authenticate(string userName, string password)
-    {
-        var sql = @"SELECT u.*, c.PasswordHash
-                    FROM Users u
-                    INNER JOIN UserCredentials c ON u.UserId = c.UserId
-                    WHERE c.UserName = @UserName";
-
-        var user = _dbConnection.QueryFirstOrDefault<User>(sql, new { UserName = userName });
-
-        if (user != null && VerifyPassword(password, user.Credentials.PasswordHash))
+        public AuthenticationService(IUserRepository userRepository)
         {
-            return user;
+            _userRepository = userRepository;
         }
 
-        return null!;
+        public User Authenticate(string userName, string password)
+        {
+            var user = _userRepository.GetUserByUserName(userName);
+
+            if (VerifyPassword(password, user.Credentials.PasswordHash))
+            {
+                return user;
+            }
+
+            return null!;
+        }
+
+        public bool IsUserInRole(int userId, string roleName) => _userRepository.IsUserInRole(userId, roleName);
+
+        private bool VerifyPassword(string password, string passwordHash) => PasswordManager.HashPassword(password) == passwordHash;
     }
-
-    public bool IsUserInRole(int userId, string roleName)
-    {
-        var sql = @"SELECT COUNT(*)
-                    FROM UserRoles ur
-                    INNER JOIN Roles r ON ur.RoleId = r.RoleId
-                    WHERE ur.UserId = @UserId AND r.RoleName = @RoleName";
-
-        var count = _dbConnection.ExecuteScalar<int>(sql, new { UserId = userId, RoleName = roleName });
-
-        return count > 0;
-    }
-
-    private bool VerifyPassword(string password, string passwordHash) => PasswordManager.HashPassword(password) == passwordHash;
 }

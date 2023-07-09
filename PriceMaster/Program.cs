@@ -1,10 +1,14 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using PriceMaster.Models;
 using PriceMaster.Services;
+using PriceMaster.Repositories;
 using System.Data;
 using System.Data.SqlClient;
-using PriceMaster.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,11 +46,9 @@ builder.Services.AddAuthorization(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -63,9 +65,6 @@ app.MapControllerRoute(
     pattern: "{area}/{controller}/{action}/{id?}",
     defaults: new { controller = "Home", action = "Index" }
 );
-
-var connectionString = configuration.GetConnectionString("PriceMasterConnectionString");
-builder.Services.AddTransient<IDbConnection>(provider => new SqlConnection(connectionString));
 
 // Use the configuration values as needed in your application
 app.Run();

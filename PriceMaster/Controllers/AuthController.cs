@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PriceMaster.Models;
 using PriceMaster.Services;
+using PriceMaster.ViewModels;
 
 namespace PriceMaster.Controllers
 {
