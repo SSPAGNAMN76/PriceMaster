@@ -1,0 +1,8 @@
+IF NOT EXISTS ( 
+        SELECT 1 
+        FROM INFORMATION_SCHEMA.COLUMNS 
+        WHERE TABLE_NAME = 'Users' AND COLUMN_NAME = 'Email' )
+BEGIN
+    ALTER TABLE dbo.Users
+    ADD Email NVARCHAR(70) NULL;    
+END

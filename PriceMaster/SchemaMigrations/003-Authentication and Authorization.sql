@@ -1,4 +1,4 @@
-IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'dbo.AspNetUsers')
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'Roles')
 BEGIN
 
    -- Creazione della tabella Roles

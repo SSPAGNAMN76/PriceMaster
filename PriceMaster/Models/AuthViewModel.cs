@@ -2,9 +2,9 @@
 
 namespace PriceMaster.Models
 {
-    public class LoginModel
+    public class LoginViewModel
     {
-        public LoginModel()
+        public LoginViewModel()
         {
             UserName = string.Empty;
             Password = string.Empty;
@@ -18,9 +18,9 @@ namespace PriceMaster.Models
         public string Password { get; set; }
     }
 
-    public class RegisterModel
+    public class RegisterViewModel
     {
-        public RegisterModel()
+        public RegisterViewModel()
         {
             UserName = string.Empty;
             Password = string.Empty;
@@ -39,9 +39,9 @@ namespace PriceMaster.Models
         public string ConfirmPassword { get; set; }
     }
 
-    public class ForgotPasswordModel
+    public class ForgotPasswordViewModel
     {
-        public ForgotPasswordModel()
+        public ForgotPasswordViewModel()
         {
             Email = string.Empty;
         }

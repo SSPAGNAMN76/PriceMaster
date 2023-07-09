@@ -1,4 +1,4 @@
-IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'dbo.ConfigurationParameters')
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'ConfigurationParameters')
 BEGIN
     CREATE TABLE dbo.ConfigurationParameters
     (

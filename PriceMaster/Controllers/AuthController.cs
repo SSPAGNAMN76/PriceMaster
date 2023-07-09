@@ -17,16 +17,16 @@ namespace PriceMaster.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            var model = new LoginModel();
+            var model = new LoginViewModel();
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult Login(LoginModel model)
+        public IActionResult Login(LoginViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                var user = _authenticationService.Authenticate(model.UserName, model.Password);
+                var user = _authenticationService.Authenticate(viewModel.UserName, viewModel.Password);
 
                 if (user != null)
                 {
@@ -40,18 +40,18 @@ namespace PriceMaster.Controllers
             }
 
             // Mostra la vista di login con gli eventuali messaggi di errore
-            return View(model);
+            return View(viewModel);
         }
 
         [HttpGet]
         public IActionResult Register()
         {
-            var model = new RegisterModel();
+            var model = new RegisterViewModel();
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult Register(RegisterModel model)
+        public IActionResult Register(RegisterViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -64,18 +64,18 @@ namespace PriceMaster.Controllers
             }
 
             // Mostra la vista di registrazione con gli eventuali messaggi di errore
-            return View(model);
+            return View(viewModel);
         }
 
         [HttpGet]
         public IActionResult ForgotPassword()
         {
-            var model = new ForgotPasswordModel();
+            var model = new ForgotPasswordViewModel();
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult ForgotPassword(ForgotPasswordModel model)
+        public IActionResult ForgotPassword(ForgotPasswordViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace PriceMaster.Controllers
             }
 
             // Mostra la vista di recupero password con gli eventuali messaggi di errore
-            return View(model);
+            return View(viewModel);
         }
 
         public IActionResult PasswordResetConfirmation()
