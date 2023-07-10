@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PriceMaster.Repositories;
 using PriceMaster.Services;
 using PriceMaster.ViewModels;
 
@@ -9,10 +10,13 @@ namespace PriceMaster.Controllers
     public class ConfigurationParameterController : Controller
     {
         private readonly IConfigurationParameterService _parameterService;
+        private readonly IAuthenticationService _authenticationService;
 
-        public ConfigurationParameterController(IConfigurationParameterService parameterService)
+        public ConfigurationParameterController(IConfigurationParameterService parameterService,
+                                                IAuthenticationService authenticationService)
         {
             _parameterService = parameterService;
+            _authenticationService = authenticationService;
         }
 
 

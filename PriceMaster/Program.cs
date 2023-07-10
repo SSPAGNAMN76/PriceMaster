@@ -1,14 +1,8 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using PriceMaster.Models;
-using PriceMaster.Services;
 using PriceMaster.Repositories;
-using System.Data;
-using System.Data.SqlClient;
+using PriceMaster.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +23,7 @@ builder.Services.AddTransient<IConfigureOptions<AppSettings>>(provider =>
 builder.Services.AddTransient<IConfiguratonParameterRepository, ConfiguratonParameterRepository>();
 builder.Services.AddTransient<IConfigurationParameterService, ConfigurationParameterService>();
 
+builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
